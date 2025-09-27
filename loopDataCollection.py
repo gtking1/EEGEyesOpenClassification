@@ -25,7 +25,7 @@ class Graph:
         self.samples_per_segment = 1250 # 1250
         self.open_segments = 0
         self.closed_segments = 0
-        self.session_time = datetime.datetime.now().strftime("%m %d %H %M ")
+        self.session_time = datetime.datetime.now().strftime("%m_%d_%H_%M")
 
         self.eyes_open = True
         self.num_each_seg = 12 # 12
@@ -57,7 +57,7 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    useRealBoard = False
+    useRealBoard = True
     
     if useRealBoard == False:
         # use docs to check which parameters are required for specific board, e.g. for Cyton - set serial port
