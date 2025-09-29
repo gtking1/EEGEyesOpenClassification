@@ -12,13 +12,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = DataFilter.read_file('0926_480_seconds.csv') # rows of features, columns of data
+data = DataFilter.read_file('test.csv') # rows of features, columns of data
 df = pd.DataFrame(np.transpose(data)) # rows of data, columns of features
 # print('Data From the File')
 # print(data[:250])
 
 exg_channels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 sampling_rate = 125
+nfft = DataFilter.get_nearest_power_of_two(sampling_rate)
 curves = list()
 plots = list()
 
@@ -65,7 +66,10 @@ for i in range(4):
 # index = df.where(df[30] == point).first_valid_index()
 # ymax = df[channel][index]
 # plt.vlines(x, ymin, ymax, colors='red', linestyles='dashed')
-plt.show()
+
+
+
+#plt.show()
 print(df.shape)
 #print("Expected number of samples:", self.update_speed_ms / 1000 * self.sampling_rate * 2 * self.num_each_seg)
 
@@ -84,13 +88,48 @@ for i in range(len(labels)):
 print(truthcount, falsecount)
 
 block = 0
+indices = [0]
 
 for i in range(1, len(labels)):
     if not labels[i] == labels[i - 1]:
         print(block + 1)
+        indices.append(i - 1)
+        indices.append(i)
         block = 0
     else:
         block += 1
 
 print(block + 1)
+indices.append(59999)
+print(indices)
+print(len(indices))
+
+for channel in range(1, 17):
+    print(channel)
+    # print(type(data[channel]))
+    print(min(data[channel])) # Why are some voltages positive and some negative?
+    print(max(data[channel]))
+    # dat = data[channel]
+    # psd = DataFilter.get_psd_welch(dat, nfft, nfft // 2, sampling_rate,
+    #                                WindowOperations.BLACKMAN_HARRIS.value)
+    # band_power_alpha = DataFilter.get_band_power(psd, 7.0, 13.0)
+    # print(band_power_alpha)
+
+# for channel in range(1, 17):
+#     alphas = []
+#     for index in range(0, 96, 2):
+#         startInd = indices[index]
+#         endInd = indices[index + 1]
+#         #print(data[channel][startInd:endInd+1].shape)
+#         #print(data[-1][startInd:endInd+1][0])
+#         dat = data[channel][startInd:endInd+1]
+#         DataFilter.detrend(dat, DetrendOperations.LINEAR.value)
+#         psd = DataFilter.get_psd_welch(dat, nfft, nfft // 2, sampling_rate,
+#                                     WindowOperations.BLACKMAN_HARRIS.value)
+#         band_power_alpha = DataFilter.get_band_power(psd, 7.0, 13.0)
+#         alphas.append(band_power_alpha)
+
+#     for i in range(1, len(alphas), 2):
+#         if (alphas[i] < alphas[i - 1]):
+#             print(channel, "Trend defied")
     
