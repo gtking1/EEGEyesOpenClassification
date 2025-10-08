@@ -5,10 +5,10 @@ from collections import deque
 from playsound import playsound
 
 import brainflow
-import pyqtgraph as pg
+# import pyqtgraph as pg
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
 from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations, WindowOperations
-from pyqtgraph.Qt import QtWidgets, QtCore
+# from pyqtgraph.Qt import QtWidgets, QtCore
 import numpy as np
 import pandas as pd
 import datetime
@@ -107,7 +107,7 @@ def main():
         time.sleep(5)
         playsound('./beep.mp3', block=False)
         print("Starting recording")
-        #board_shim.get_board_data()
+        board_shim.get_board_data()
         Graph(board_shim)
     except BaseException:
         logging.warning('Exception', exc_info=True)

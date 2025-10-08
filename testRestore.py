@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = DataFilter.read_file('test.csv') # rows of features, columns of data
+data = DataFilter.read_file('./data/1007_240_seconds.csv') # rows of features, columns of data
 df = pd.DataFrame(np.transpose(data)) # rows of data, columns of features
 # print('Data From the File')
 # print(data[:250])
@@ -69,7 +69,7 @@ for i in range(4):
 
 
 
-#plt.show()
+plt.show()
 print(df.shape)
 #print("Expected number of samples:", self.update_speed_ms / 1000 * self.sampling_rate * 2 * self.num_each_seg)
 
@@ -100,7 +100,7 @@ for i in range(1, len(labels)):
         block += 1
 
 print(block + 1)
-indices.append(59999)
+indices.append(indices[-1] + 1249)
 print(indices)
 print(len(indices))
 
@@ -115,21 +115,21 @@ for channel in range(1, 17):
     # band_power_alpha = DataFilter.get_band_power(psd, 7.0, 13.0)
     # print(band_power_alpha)
 
-# for channel in range(1, 17):
-#     alphas = []
-#     for index in range(0, 96, 2):
-#         startInd = indices[index]
-#         endInd = indices[index + 1]
-#         #print(data[channel][startInd:endInd+1].shape)
-#         #print(data[-1][startInd:endInd+1][0])
-#         dat = data[channel][startInd:endInd+1]
-#         DataFilter.detrend(dat, DetrendOperations.LINEAR.value)
-#         psd = DataFilter.get_psd_welch(dat, nfft, nfft // 2, sampling_rate,
-#                                     WindowOperations.BLACKMAN_HARRIS.value)
-#         band_power_alpha = DataFilter.get_band_power(psd, 7.0, 13.0)
-#         alphas.append(band_power_alpha)
+for channel in range(1, 17):
+    alphas = []
+    for index in range(0, 48, 2):
+        startInd = indices[index]
+        endInd = indices[index + 1]
+        #print(data[channel][startInd:endInd+1].shape)
+        #print(data[-1][startInd:endInd+1][0])
+        dat = data[channel][startInd:endInd+1]
+        DataFilter.detrend(dat, DetrendOperations.LINEAR.value)
+        psd = DataFilter.get_psd_welch(dat, nfft, nfft // 2, sampling_rate,
+                                    WindowOperations.BLACKMAN_HARRIS.value)
+        band_power_alpha = DataFilter.get_band_power(psd, 7.0, 13.0)
+        alphas.append(band_power_alpha)
 
-#     for i in range(1, len(alphas), 2):
-#         if (alphas[i] < alphas[i - 1]):
-#             print(channel, "Trend defied")
+    for i in range(1, len(alphas), 2):
+        if (alphas[i] < alphas[i - 1]):
+            print(channel, "Trend defied")
     
