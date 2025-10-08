@@ -4,15 +4,15 @@ import time
 from collections import deque
 
 import brainflow
-import pyqtgraph as pg
+# import pyqtgraph as pg
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
 from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations, WindowOperations
-from pyqtgraph.Qt import QtWidgets, QtCore
+# from pyqtgraph.Qt import QtWidgets, QtCore
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = DataFilter.read_file('./data/1007_240_seconds.csv') # rows of features, columns of data
+data = DataFilter.read_file('./data/kuba.csv') # rows of features, columns of data
 df = pd.DataFrame(np.transpose(data)) # rows of data, columns of features
 # print('Data From the File')
 # print(data[:250])
@@ -117,7 +117,7 @@ for channel in range(1, 17):
 
 for channel in range(1, 17):
     alphas = []
-    for index in range(0, 48, 2):
+    for index in range(0, 8, 2):
         startInd = indices[index]
         endInd = indices[index + 1]
         #print(data[channel][startInd:endInd+1].shape)
